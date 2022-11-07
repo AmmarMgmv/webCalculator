@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.spring.javawebserver.webserver.WebCalculatorApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.738 s - in com.spring.javawebserver.webserver.WebCalculatorApplicationTests
