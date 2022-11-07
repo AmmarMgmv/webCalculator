@@ -130,23 +130,6 @@ class AppTest {
 	}
 
 	@Test
-	public void testingPrecedence() {
-
-		boolean precedence1 = App.hasPrecedence('*', '-');
-		assertEquals(false, precedence1);
-
-		boolean precedence2 = App.hasPrecedence('+', '*');
-		assertEquals(true, precedence2);
-
-		boolean precedence3 = App.hasPrecedence('-', '*');
-		assertEquals(true, precedence3);
-
-		boolean precedence4 = App.hasPrecedence('*', '+');
-		assertEquals(false, precedence4);
-
-	}
-
-	@Test
 	public void testingEvaluateExpression() {
 		//Testing postfix int expressions
 		String input = App.evaluateExpression("12 423 + 413 - ", "#.###");
@@ -205,6 +188,43 @@ class AppTest {
 		input = App.evaluateExpression("5 208.51271028909628 + 7 - ", "#.###");
 		expected = "206.513";
 		assertEquals(expected, input);
+	}
+	
+	@Test
+	public void testCalculate() {
+		//Testing top level function
+		assertEquals("358.0", App.calculate("123+235"));
+		assertEquals("0.28", App.calculate("1.13-0.85"));
+		assertEquals("25.0", App.calculate("5*5"));
+		assertEquals("0.0", App.calculate("0*0"));
+		assertEquals("0.0", App.calculate("0*8"));
+		assertEquals("1.0", App.calculate("2^0"));
+		assertEquals("1.0", App.calculate("2.5^0"));
+		assertEquals("5.0", App.calculate("10/2"));
+		assertEquals("4.0", App.calculate("2^2"));
+		assertEquals("5.0", App.calculate("-5+10"));
+		assertEquals("8.0", App.calculate("5--3"));
+		assertEquals("25.0", App.calculate("-5*-5"));
+		assertEquals("-391.65", App.calculate("52-(75.73+13)*10/2"));
+		assertEquals("24.0", App.calculate("(2^3)*5-8*6/(1+2)"));
+
+		// Testing log
+		assertEquals("0.693", App.calculate("log(2)"));
+		assertEquals("0.693", App.calculate("log(1+1)"));
+		assertEquals("Log 0 is undefined!", App.calculate("log(0)"));
+		assertEquals("-5.051", App.calculate("log(2*2)-4*log(3+2)"));
+		assertEquals("-0.367", App.calculate("log(log(2))"));
+
+		// Testing exp
+		assertEquals("1.0", App.calculate("exp(0)"));
+		assertEquals("2.718", App.calculate("exp(1)"));
+		assertEquals("54.598", App.calculate("exp(2*2)"));
+		assertEquals("30.786", App.calculate("3+5*exp(4.2)/(5+7)"));
+		assertEquals("13306.745", App.calculate("exp(17-5)/12.231"));
+
+		//Testing error case
+		assertEquals("This is not a valid expression. Please try again and make sure there are no spaces in your expression!", App.calculate("sdjhgf"));
+		assertEquals("This is not a valid expression. Please try again and make sure there are no spaces in your expression!", App.calculate("5 + 2 + 4 - 5"));
 	}
 }
 
