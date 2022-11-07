@@ -20,10 +20,9 @@ public class App
             if(postfix.contains("Error: Something went wrong!") || postfix.contains("Log 0 is undefined!")){
                 return postfix;
             }
-            System.out.println(postfix);
             result = evaluateExpression(postfix, "#.###");
         } else {
-            result = "This is not a valid expression. Please try again!";
+            result = "This is not a valid expression. Please try again and make sure there are no spaces in your expression!";
         }
         return result;
     }
@@ -240,6 +239,18 @@ public class App
             }
         }
         return Integer.toString(operands.pop());
+    }
+    
+    public static int getPrecedence(char operator) {
+        if (operator == '+' || operator == '-') {
+            return 1;
+        }
+        else if ((operator == '*' || operator == '/' || operator == '^')){
+            return 2;
+        }
+        else{
+            return 0;
+        }
     }
     
     public static boolean isOperator(char current) {
