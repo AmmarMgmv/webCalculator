@@ -35,7 +35,7 @@ public class App
         if(isOperator(last) || errorInString(input) || !validBrackets(input) || (input == "()")) {
             return false;
         }
-        
+
         else {
             boolean doubleOperator = false;
 
@@ -65,12 +65,34 @@ public class App
                 else if ((isOperator(current)) && !doubleOperator) {
                     doubleOperator = true;
                     if(input.charAt(i+1) == '-'){
-                        if((!Character.isDigit(input.charAt(i+2))) && (input.charAt(i+2) != '(')){
+                        if((!Character.isDigit(input.charAt(i+2))) && (input.charAt(i+2) != '(') && (input.charAt(i+2) != 'e') && (input.charAt(i+2) != 'l')){
                             return false;
                         }
                         else {
                             doubleOperator = false;
                         }
+                    }
+                }
+
+                else if (current == 'e' && input.charAt(i+1) == 'x' && input.charAt(i+2) == 'p' && input.charAt(i+3) == '('){
+                    if(input.charAt(i+4) == ')') {
+                        return false;
+                    }
+                    else {
+                        i = i + 3;
+                        current = input.charAt(i);
+                        continue;
+                    }
+                }
+
+                else if (current == 'l' && input.charAt(i+1) == 'o' && input.charAt(i+2) == 'g' && input.charAt(i+3) == '('){
+                    if(input.charAt(i+4) == ')') {
+                        return false;
+                    }
+                    else {
+                        i = i + 3;
+                        current = input.charAt(i);
+                        continue;
                     }
                 }
 
