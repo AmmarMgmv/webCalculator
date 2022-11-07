@@ -40,12 +40,13 @@ interface NotesRepository extends MongoRepository<Note, String> {
 class Note {
     @Id
     private String id;
+    private String answer;
     private String description;
 
 
     @Override
     public String toString() {
-        return description + " = " + id;
+        return description + " = " + answer;
     }
 }
 
@@ -54,6 +55,8 @@ class NoteController {
 
     @Autowired
     private NotesRepository notesRepository;
+
+    static int newID=0;
 
 
     @GetMapping("/")
@@ -86,9 +89,9 @@ class NoteController {
         if (description != null && !description.trim().isEmpty()) {
             // check if equation is valid, if not print error message
             try {
-                notesRepository.save(new Note(App.calculate(description), description.trim()));
+                notesRepository.save(new Note(""+(newID++),App.calculate(description.trim()), description.trim()));
             }catch(Exception e){
-                notesRepository.save(new Note("This is not a valid expression. A valid input contains only integers and operands such as +, - and *", description.trim()));
+                notesRepository.save(new Note(""+(newID++),"This isn't a valid expression. A valid input contains only integers and operands such as +, - and *", description.trim()));
             }
             model.addAttribute("description", "");
         }
