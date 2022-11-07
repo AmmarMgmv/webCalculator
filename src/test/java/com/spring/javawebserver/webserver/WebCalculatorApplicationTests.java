@@ -161,5 +161,13 @@ class AppTest {
 		assertFalse(App.validInput("."));
 		assertFalse(App.validInput("()"));
 	}
+
+	//Testing invalid bracket amounts
+	@Test
+	public void testingInvalidBracketAmounts(){
+		assertFalse(App.validInput("((5+3)"));
+		assertFalse(App.validInput("(5+3))"));
+		assertFalse(App.validInput("3+((7-4)*5"));
+	}
 }
 
