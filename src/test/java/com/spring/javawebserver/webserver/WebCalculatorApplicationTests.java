@@ -27,43 +27,88 @@ class AppTest {
 		assertTrue(App.validInput("-5+10"));
 		assertTrue(App.validInput("5--3"));
 		assertTrue(App.validInput("-5*-5"));
+		
+		//Testing invalid inputs
+        	assertFalse(App.validInput("^43"));
+        	assertFalse(App.validInput("52+"));
+        	assertFalse(App.validInput("/5"));
+        	assertFalse(App.validInput("*23"));
+
+        	//Testing double operators
+        	assertFalse(App.validInput("5++6"));
+        	assertFalse(App.validInput("5*+6"));
+        	assertFalse(App.validInput("5//6"));
+        	assertFalse(App.validInput("5+^6"));
+
+        	//Testing exp and log
+        	assertTrue(App.validInput("log(2)"));
+        	assertTrue(App.validInput("exp(5)"));
+        	assertFalse(App.validInput("log()"));
+        	assertFalse(App.validInput("exp()"));
+        	assertFalse(App.validInput("log6"));
+        	assertFalse(App.validInput("exp3"));
+        	assertFalse(App.validInput("lg()"));
+        	assertFalse(App.validInput("xp()"));
+
+        	//Testing invalid characters
+        	assertFalse(App.validInput("5..7-3"));
+        	assertFalse(App.validInput("dsgkj"));
+        	assertFalse(App.validInput("."));
+        	assertFalse(App.validInput("()"));
+
+        	//Testing invalid bracket amounts
+        	assertFalse(App.validInput("((5+3)"));
+        	assertFalse(App.validInput("(5+3))"));
+        	assertFalse(App.validInput("3+((7-4)*5"));
 
 	}
 
 	@Test
 	public void testingConvertToPostfix() {
 
-		String input1 = App.convertToPostfix("12+423-413");
-		String expected1 = "12 423 + 413 - ";
-		assertEquals(expected1, input1);
+		//Testing postfix int expressions
+		String input = App.convertToPostfix("12+423-413");
+		String expected = "12 423 + 413 - ";
+		assertEquals(expected, input);
 
-		String input2 = App.convertToPostfix("12+423*413-7");
-		String expected2 = "12 423 413 * + 7 - ";
-		assertEquals(expected2, input2);
+		input = App.convertToPostfix("12+423*413-7");
+		expected = "12 423 413 * + 7 - ";
+		assertEquals(expected, input);
 
-		String input3 = App.convertToPostfix("11*111-111+111111");
-		String expected3 = "11 111 * 111 - 111111 + ";
-		assertEquals(expected3, input3);
+		input = App.convertToPostfix("3+-5*((7+3/2)-1)");
+		expected = "3 -5 7 3 2 / + 1 - * +";
+		assertEquals(expected, input);
 
-		String input4 = App.convertToPostfix("4412*31290-1143211");
-		String expected4 = "4412 31290 * 1143211 - ";
-		assertEquals(expected4, input4);
+		//Testing postfix float expressions
+		input = App.convertToPostfix("12.342+423.12-413.87");
+		expected = "12.342 423.12 + 413.87 - ";
+		assertEquals(expected, input);
 
-		String input5 = App.convertToPostfix("12313*1414*1231*10043");
-		String expected5 = "12313 1414 * 1231 * 10043 * ";
-		assertEquals(expected5, input5);
+		input = App.convertToPostfix("12.123+423.123*413.123-7.123");
+		expected = "12.123 423.123 413.123 * + 7.123 - ";
+		assertEquals(expected, input);
 
-		String input6 = App.convertToPostfix("142-4133+214*4132");
-		String expected6 = "142 4133 - 214 4132 * + ";
-		assertEquals(expected6, input6);
+		input = App.convertToPostfix("4.5^(7*2.3)");
+		expected = "4.5 7 2.3 * ^ ";
+		assertEquals(expected, input);
 
-		String input7 = App.convertToPostfix("8852-1198224+1898928*1983");
-		String expected7 = "8852 1198224 - 1898928 1983 * + ";
-		assertEquals(expected7, input7);
+		//Testing with brackets
+		input = App.convertToPostfix("12+(5-2)*5");
+		expected = "12 5 2 - 5 * + ";
+		assertEquals(expected, input);
 
-		String input8 = App.convertToPostfix("979983-1123*1111+1434344");
-		String expected8 = "979983 1123 1111 * - 1434344 + ";
-		assertEquals(expected8, input8);
+		input = App.convertToPostfix("5/(6+3)*(4-2)");
+		expected = "5 6 3 + / 4 2 - * ";
+		assertEquals(expected, input);
+
+		//Testing longer expressions
+		input = App.convertToPostfix("5-3+2*(6.3-5+1)--4/2+2^4*74-(20*6-7-9/3)-(235*4)+5-3+2*(6.3-5+1)--4/2+2^4*74-(20*6-7-9/3)-(235*4)");
+		expected = "5 3 - 2 6.3 5 - 1 + * + -4 2 / - 2 4 ^ 74 * + 20 6 * 7 - 9 3 / - - 235 4 * - 5 + 3 - 2 6.3 5 - 1 + * + -4 2 / - 2 4 ^ 74 * + 20 6 * 7 - 9 3 / - - 235 4 * - ";
+		assertEquals(expected, input);
+
+		input = App.convertToPostfix("5.234-2.7334*9.75-(1003.76+75.836/25.834)+72*(2.43+(4+(64.43+4)))+5.234-2.7334*9.75-(1003.76+75.836/25.834)+72*(2.43+(4+(64.43+4)))");
+		expected = "5.234 2.7334 9.75 * - 1003.76 75.836 25.834 / + - 72 2.43 4 64.43 4 + + + * + 5.234 + 2.7334 9.75 * - 1003.76 75.836 25.834 / + - 72 2.43 4 64.43 4 + + + * + ";
+		assertEquals(expected, input);
 
 	}
 
@@ -119,55 +164,6 @@ class AppTest {
 		String expected8 = "1166674";
 		assertEquals(expected8, input8);
 
-	}
-
-	// testing invalid inputs
-	@Test
-	public void testingValidInputs(){
-		//Testing invalid inputs
-		assertFalse(App.validInput("^43"));
-		assertFalse(App.validInput("52+"));
-		assertFalse(App.validInput("/5"));
-		assertFalse(App.validInput("*23"));
-	}
-
-	//Testing double operators
-	@Test
-	public void testingDoubleOperators() {
-		assertFalse(App.validInput("5++6"));
-		assertFalse(App.validInput("5*+6"));
-		assertFalse(App.validInput("5//6"));
-		assertFalse(App.validInput("5+^6"));
-	}
-
-	//Testing exp and log
-	@Test
-	public void testingExpandLog(){
-		assertTrue(App.validInput("log(2)"));
-		assertTrue(App.validInput("exp(5)"));
-		assertFalse(App.validInput("log()"));
-		assertFalse(App.validInput("exp()"));
-		assertFalse(App.validInput("log6"));
-		assertFalse(App.validInput("exp3"));
-		assertFalse(App.validInput("lg()"));
-		assertFalse(App.validInput("xp()"));
-	}
-
-	//Testing invalid characters
-	@Test
-	public void testingInvalidCharacters(){
-		assertFalse(App.validInput("5..7-3"));
-		assertFalse(App.validInput("dsgkj"));
-		assertFalse(App.validInput("."));
-		assertFalse(App.validInput("()"));
-	}
-
-	//Testing invalid bracket amounts
-	@Test
-	public void testingInvalidBracketAmounts(){
-		assertFalse(App.validInput("((5+3)"));
-		assertFalse(App.validInput("(5+3))"));
-		assertFalse(App.validInput("3+((7-4)*5"));
 	}
 }
 
