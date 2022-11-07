@@ -109,7 +109,24 @@ class AppTest {
 		input = App.convertToPostfix("5.234-2.7334*9.75-(1003.76+75.836/25.834)+72*(2.43+(4+(64.43+4)))+5.234-2.7334*9.75-(1003.76+75.836/25.834)+72*(2.43+(4+(64.43+4)))");
 		expected = "5.234 2.7334 9.75 * - 1003.76 75.836 25.834 / + - 72 2.43 4 64.43 4 + + + * + 5.234 + 2.7334 9.75 * - 1003.76 75.836 25.834 / + - 72 2.43 4 64.43 4 + + + * + ";
 		assertEquals(expected, input);
+		
+		//Testing log
+		input = App.convertToPostfix("5+log(2)");
+		expected = "5 0.6931471805599453 + ";
+		assertEquals(expected, input);
 
+		input = App.convertToPostfix("5+log(2.34+3)");
+		expected = "5 1.6752256529721035 + ";
+		assertEquals(expected, input);
+
+		//Testing exp
+		input = App.convertToPostfix("5+exp(2)*3");
+		expected = "5 7.38905609893065 3 * + ";
+		assertEquals(expected, input);
+
+		input = App.convertToPostfix("5+exp(2.34+3)-7");
+		expected = "5 208.51271028909628 + 7 - ";
+		assertEquals(expected, input);
 	}
 
 	@Test
