@@ -148,39 +148,63 @@ class AppTest {
 
 	@Test
 	public void testingEvaluateExpression() {
+		//Testing postfix int expressions
+		String input = App.evaluateExpression("12 423 + 413 - ", "#.###");
+		String expected = "22.0";
+		assertEquals(expected, input);
 
-		String input1 = App.evaluateExpression("12 423 + 413 - ");
-		String expected1 = "22";
-		assertEquals(expected1, input1);
+		input = App.evaluateExpression("12 423 413 * + 7 - ", "#.###");
+		expected = "174704.0";
+		assertEquals(expected, input);
 
-		String input2 = App.evaluateExpression("12 423 413 * + 7 - ");
-		String expected2 = "174704";
-		assertEquals(expected2, input2);
+		input = App.evaluateExpression("3 -5 7 3 2 / + 1 - * + ", "#.###");
+		expected = "-34.5";
+		assertEquals(expected, input);
 
-		String input3 = App.evaluateExpression("11 111 * 111 - 111111 + ");
-		String expected3 = "112221";
-		assertEquals(expected3, input3);
+		//Testing postfix float expressions
+		input = App.evaluateExpression("12.342 423.12 + 413.87 - ", "#.###");
+		expected = "21.592";
+		assertEquals(expected, input);
 
-		String input4 = App.evaluateExpression("4412 31290 * 1143211 - ");
-		String expected4 = "136908269";
-		assertEquals(expected4, input4);
+		input = App.evaluateExpression("12.123 423.123 413.123 * + 7.123 - ", "#.###");
+		expected = "174806.83";
+		assertEquals(expected, input);
 
-		String input5 = App.evaluateExpression("1213 9912 + 1288 109892 * - ");
-		String expected5 = "-141529771";
-		assertEquals(expected5, input5);
+		//Testing with brackets
+		input = App.evaluateExpression("12 5 2 - 5 * + ", "#.###");
+		expected = "27.0";
+		assertEquals(expected, input);
 
-		String input6 = App.evaluateExpression("142 4133 - 214 4132 * + ");
-		String expected6 = "880257";
-		assertEquals(expected6, input6);
+		input = App.evaluateExpression("5 6 3 + / 4 2 - * ", "#.###");
+		expected = "1.111";
+		assertEquals(expected, input);
 
-		String input7 = App.evaluateExpression("121411 3112 - 892 - 1898 11111 * + ");
-		String expected7 = "21206085";
-		assertEquals(expected7, input7);
+		//Testing longer expressions
+		input = App.evaluateExpression("5 3 - 2 6.3 5 - 1 + * + -4 2 / - 2 4 ^ 74 * + 20 6 * 7 - 9 3 / - - 235 4 * - 5 + 3 - 2 6.3 5 - 1 + * + -4 2 / - 2 4 ^ 74 * + 20 6 * 7 - 9 3 / - - 235 4 * - ", "#.###");
+		expected = "285.2";
+		assertEquals(expected, input);
 
-		String input8 = App.evaluateExpression("979983 1123 1111 * - 1434344 + ");
-		String expected8 = "1166674";
-		assertEquals(expected8, input8);
+		input = App.evaluateExpression("5.234 2.7334 9.75 * - 1003.76 75.836 25.834 / + - 72 2.43 4 64.43 4 + + + * + 5.234 + 2.7334 9.75 * - 1003.76 75.836 25.834 / + - 72 2.43 4 64.43 4 + + + * + ", "#.###");
+		expected = "8723.615";
+		assertEquals(expected, input);
 
+		//Testing log
+		input = App.evaluateExpression("5 0.6931471805599453 + ", "#.###");
+		expected = "5.693";
+		assertEquals(expected, input);
+
+		input = App.evaluateExpression("5 1.6752256529721035 + ", "#.###");
+		expected = "6.675";
+		assertEquals(expected, input);
+
+		//Testing exp
+		input = App.evaluateExpression("5 7.38905609893065 3 * + ", "#.###");
+		expected = "27.167";
+		assertEquals(expected, input);
+
+		input = App.evaluateExpression("5 208.51271028909628 + 7 - ", "#.###");
+		expected = "206.513";
+		assertEquals(expected, input);
 	}
 }
 
