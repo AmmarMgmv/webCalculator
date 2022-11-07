@@ -139,5 +139,18 @@ class AppTest {
 		assertFalse(App.validInput("5//6"));
 		assertFalse(App.validInput("5+^6"));
 	}
+
+	//Testing exp and log
+	@Test
+	public void testingExpandLog(){
+		assertTrue(App.validInput("log(2)"));
+		assertTrue(App.validInput("exp(5)"));
+		assertFalse(App.validInput("log()"));
+		assertFalse(App.validInput("exp()"));
+		assertFalse(App.validInput("log6"));
+		assertFalse(App.validInput("exp3"));
+		assertFalse(App.validInput("lg()"));
+		assertFalse(App.validInput("xp()"));
+	}
 }
 
