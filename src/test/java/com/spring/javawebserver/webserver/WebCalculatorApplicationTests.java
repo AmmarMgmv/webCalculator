@@ -121,7 +121,7 @@ class AppTest {
 
 	}
 
-	// testing invalid inputs 
+	// testing invalid inputs
 	@Test
 	public void testingValidInputs(){
 		//Testing invalid inputs
@@ -129,6 +129,15 @@ class AppTest {
 		assertFalse(App.validInput("52+"));
 		assertFalse(App.validInput("/5"));
 		assertFalse(App.validInput("*23"));
+	}
+
+	//Testing double operators
+	@Test
+	public void testingDoubleOperators() {
+		assertFalse(App.validInput("5++6"));
+		assertFalse(App.validInput("5*+6"));
+		assertFalse(App.validInput("5//6"));
+		assertFalse(App.validInput("5+^6"));
 	}
 }
 
