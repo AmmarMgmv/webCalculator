@@ -120,5 +120,15 @@ class AppTest {
 		assertEquals(expected8, input8);
 
 	}
+
+	// testing invalid inputs 
+	@Test
+	public void testingValidInputs(){
+		//Testing invalid inputs
+		assertFalse(App.validInput("^43"));
+		assertFalse(App.validInput("52+"));
+		assertFalse(App.validInput("/5"));
+		assertFalse(App.validInput("*23"));
+	}
 }
 
