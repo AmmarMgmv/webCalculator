@@ -152,5 +152,14 @@ class AppTest {
 		assertFalse(App.validInput("lg()"));
 		assertFalse(App.validInput("xp()"));
 	}
+
+	//Testing invalid characters
+	@Test
+	public void testingInvalidCharacters(){
+		assertFalse(App.validInput("5..7-3"));
+		assertFalse(App.validInput("dsgkj"));
+		assertFalse(App.validInput("."));
+		assertFalse(App.validInput("()"));
+	}
 }
 
