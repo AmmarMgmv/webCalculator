@@ -209,36 +209,62 @@ public class App
         return postfixExpression.toString();
     }
 
-    public static String evaluateExpression(String input){
-        Stack <Integer> operands = new Stack <> ();
+    public static String evaluateExpression(String input, String threeDecimalPlaces){
+        Stack <Float> operands = new Stack <> ();
 
         for (int i = 0; i < input.length(); i++){
-            if(Character.isDigit(input.charAt(i))){
-                StringBuilder multiDigitNumber = new StringBuilder();
+            char current = input.charAt(i);
+
+            if(current == '-'){
+                int charAfterCurrent = i + 1;
+                if(Character.isDigit(input.charAt(charAfterCurrent))){
+                    continue;
+                }
+            }
+
+            if(Character.isDigit(current)){
+                StringBuilder floatNumber = new StringBuilder();
+                int charBeforeCurrent = i -1;
+
+                if(charBeforeCurrent > -1){
+                    if(input.charAt(charBeforeCurrent) == '-'){
+                        floatNumber.append('-');
+                    }
+                }
+
                 while(input.charAt(i) != ' '){
-                    multiDigitNumber.append(input.charAt(i));
+                    floatNumber.append(input.charAt(i));
                     i++;
                 }
-                operands.push(Integer.parseInt(multiDigitNumber.toString()));
+                operands.push(Float.parseFloat(floatNumber.toString()));
             }
-            else if (input.charAt(i) == '*' || input.charAt(i) == '+' || input.charAt(i) == '-' ){
-                int result = 0;
-                int firstNum = operands.pop();
-                int secondNum = operands.pop();
 
-                if(input.charAt(i) == '*'){
+            else if (isOperator(current)){
+                float result = 0.0F;
+                float firstNum = operands.pop();
+                float secondNum = operands.pop();
+
+                if(current == '*'){
                     result = firstNum * secondNum;
                 }
-                else if (input.charAt(i) == '+'){
+                else if (current == '+'){
                     result = firstNum + secondNum;
                 }
-                else if (input.charAt(i) == '-'){
+                else if (current == '-'){
                     result = secondNum - firstNum;
+                }
+                else if (current == '/') {
+                    result = secondNum / firstNum;
+                }
+                else if (current == '^') {
+                    double power = Math.pow(secondNum, firstNum);
+                    result = (float)power;
                 }
                 operands.push(result);
             }
         }
-        return Integer.toString(operands.pop());
+        DecimalFormat threeDP = new DecimalFormat(threeDecimalPlaces);
+        return Float.toString(Float.parseFloat(threeDP.format(operands.pop())));
     }
     
     public static int getPrecedence(char operator) {
