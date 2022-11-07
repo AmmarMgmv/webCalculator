@@ -113,34 +113,57 @@ public class App
         StringBuilder postfixExpression = new StringBuilder();
 
         for (int i = 0; i < input.length(); i++){
-            if(Character.isDigit(input.charAt(i))){
-                postfixExpression.append(input.charAt(i));
+            char current = input.charAt(i);
+            if(Character.isDigit(current) || current == '.'){
+                postfixExpression.append(current);
             }
-            else if(input.charAt(i) == '*' || input.charAt(i) == '+' || input.charAt(i) == '-' ) {
+
+            else if(current == '('){
+                operators.push(current);
+            }
+
+            else if(current == ')'){
+                while(!operators.isEmpty() && operators.peek() != '('){
+                    char popped = operators.pop();
+                    postfixExpression.append(' ');
+                    postfixExpression.append(popped);
+                }
+                operators.pop();
+            }
+
+            else if(isOperator(current)) {
+                if(current == '-'){
+                    int charBeforeCurrent = i - 1;
+                    if(charBeforeCurrent > -1){
+                        if((isOperator(input.charAt(charBeforeCurrent))) || (input.charAt(charBeforeCurrent) == '(')){
+                            postfixExpression.append(current);
+                            continue;
+                        }
+                    }
+                    else{
+                        postfixExpression.append(current);
+                        continue;
+                    }
+                }
                 postfixExpression.append(' ');
-                while(!operators.isEmpty() && hasPrecedence(input.charAt(i), operators.peek())){
+                while(!operators.isEmpty() && getPrecedence(current) <= getPrecedence(operators.peek())){
                     char popped = operators.pop();
                     postfixExpression.append(popped);
                     postfixExpression.append(' ');
                 }
-                operators.push(input.charAt(i));
-            }
+                operators.push(current);
+            }  
         }
         postfixExpression.append(' ');
         while (!operators.isEmpty()) {
-            postfixExpression.append(operators.pop());
+            if(operators.peek() == '('){
+                return "Error: Something went wrong!";
+            }
+            char popped = operators.pop();
+            postfixExpression.append(popped);
             postfixExpression.append(' ');
         }
         return postfixExpression.toString();
-    }
-
-    public static boolean hasPrecedence(char op1, char op2) {
-        if ((op1 == '*') && (op2 == '+' || op2 == '-')) {
-            return false;
-        }
-        else {
-            return true;
-        }
     }
 
     public static String evaluateExpression(String input){
