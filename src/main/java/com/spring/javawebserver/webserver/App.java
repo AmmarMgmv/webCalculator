@@ -16,10 +16,14 @@ public class App
     public static String calculate(String input) {
         String result = null;
         if (validInput(input)) {
-            String postfix= convertToPostfix(input);
-            result = evaluateExpression(postfix);
+            String postfix = convertToPostfix(input);
+            if(postfix.contains("Error: Something went wrong!") || postfix.contains("Log 0 is undefined!")){
+                return postfix;
+            }
+            System.out.println(postfix);
+            result = evaluateExpression(postfix, "#.###");
         } else {
-            result = "This is not a valid expression. A valid input contains only integers and operands such as +, - and *";
+            result = "This is not a valid expression. Please try again!";
         }
         return result;
     }
