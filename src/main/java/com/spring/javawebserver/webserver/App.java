@@ -5,13 +5,13 @@ import java.util.Stack;
 
 public class App
 {
-    public static void main( String[] args )
-    {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the string you want to be evaluated: ");
-        String expression = input.nextLine();
-        System.out.println("The answer is: " + calculate(expression));
-    }
+//    public static void main( String[] args )
+//    {
+//        Scanner input = new Scanner(System.in);
+//        System.out.println("Enter the string you want to be evaluated: ");
+//        String expression = input.nextLine();
+//        System.out.println("The answer is: " + calculate(expression));
+//    }
 
     public static String calculate(String input) {
         String result = null;
@@ -116,4 +116,46 @@ public class App
         }
         return Integer.toString(operands.pop());
     }
+    
+    public static boolean isOperator(char current) {
+        if (current == '-' || current == '/' || current == '+' || current == '*' || current == '^') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public static boolean errorInString(String input) {
+        if (input.contains("(+") || input.contains("(*") || input.contains("(/") || input.contains("(^")) {
+            return true;
+        }
+        if (input.contains("+)") || input.contains("-)") || input.contains("*)") || input.contains("/)") || input.contains("^)")) {
+            return true;
+        }
+        if (input.contains("..")) {
+            return true;
+        }
+        return false;
+    }
+    
+    private static boolean validBrackets(String input){
+        int openingBrackets = 0;
+        int closingBrackets = 0;
+
+        for (int i = 0; i < input.length(); i++){
+            if (input.charAt(i) == '('){
+                openingBrackets++;
+            }
+
+            else if (input.charAt(i) == ')') {
+                closingBrackets++;
+            }
+        }
+        if(openingBrackets == closingBrackets){
+            return true;
+        }
+        else{
+            return false;
+        }
 }
