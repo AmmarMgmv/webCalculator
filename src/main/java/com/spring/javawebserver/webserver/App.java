@@ -152,7 +152,47 @@ public class App
                     postfixExpression.append(' ');
                 }
                 operators.push(current);
-            }  
+            }
+            else if(current == 'e' || current == 'l'){
+                StringBuilder expLogExpr = new StringBuilder();
+                char thisChar = current;
+                i = i + 4;
+                int openingBrackets = 1;
+                int closingBrackets = 0;
+
+                for(int j = i; j < input.length(); j++){
+                    current = input.charAt(j);
+                    if(current == '('){
+                        openingBrackets++;
+                    }
+                    else if(current == ')'){
+                        closingBrackets++;
+                    }
+
+                    if(openingBrackets == closingBrackets){
+                        i = j;
+                        break;
+                    }
+
+                    expLogExpr.append(current);
+                }
+                String expLogExprStr = expLogExpr.toString();
+                String postfixExpLogExpr = convertToPostfix(expLogExprStr);
+                String expLogResult = evaluateExpression(postfixExpLogExpr, "#.###");
+
+                double result;
+
+                if(thisChar == 'e'){
+                    result = exp(Double.parseDouble(expLogResult));
+                }
+                else {
+                    if(Double.parseDouble(expLogResult) == 0.0){
+                        return "Log 0 is undefined!";
+                    }
+                    result = log(Double.parseDouble(expLogResult));
+                }
+                postfixExpression.append(result);
+            }
         }
         postfixExpression.append(' ');
         while (!operators.isEmpty()) {
