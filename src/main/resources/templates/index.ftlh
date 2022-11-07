@@ -5,7 +5,7 @@
 </head>
 <body class="background ph3 pt0 pb4 mw7 sans-serif">
 <div class="icon">
-<h1 class="f2 mb0">Sweng Calculator:<br> Group 2</h1>
+<h1 class="f2 mb0">Sweng Calculator:<br> Group 1</h1>
 </div>
 <div class="set">
 <div class="mainBlock">
