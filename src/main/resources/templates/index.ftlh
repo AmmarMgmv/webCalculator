@@ -7,6 +7,7 @@
 <div class="icon">
 <h1 class="f2 mb0">Sweng Calculator:<br> Group 2</h1>
 </div>
+<div class="set">
 <div class="mainBlock">
 <div class="functionBlock">
 <p class="f5 mt1 mb4 lh-copy">A simple string boot calculator app.</p>
@@ -27,23 +28,12 @@
                 <p>${note}</p>
                 <p></p>
             </li>
-            <li class="mv3 bb bw2 b--light-yellow bg-washed-yellow ph4 pv2"><p class="measure"></p>
-                <p>${note}</p>
-                <p></p>
-            </li>
-            <li class="mv3 bb bw2 b--light-yellow bg-washed-yellow ph4 pv2"><p class="measure"></p>
-                <p>${note}</p>
-                <p></p>
-            </li>
-            <li class="mv3 bb bw2 b--light-yellow bg-washed-yellow ph4 pv2"><p class="measure"></p>
-                <p>${note}</p>
-                <p></p>
-            </li>
         <#else>
             <p class="lh-copy f6">You haven't done any calculations.</p>
         </#list>
     </#if>
 </ul>
+</div>
 </div>
 </div>
 </body>
