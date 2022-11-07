@@ -25,23 +25,59 @@ public class App
     }
 
     public static boolean validInput (String input){
-        if(!Character.isDigit(input.charAt(0))){
+        char first = input.charAt(0);
+        char last = input.charAt(input.length() - 1);
+
+        if(first == '*' || first == '/' || first == '^') {
             return false;
         }
-        else {
-            boolean lastOperator = false;
 
-            for (int i = 0; i < input.length()-1; i++) {
-                while ((Character.isDigit(input.charAt(i))) && (i < input.length()-1)) {
+        if(isOperator(last) || errorInString(input) || !validBrackets(input) || (input == "()")) {
+            return false;
+        }
+        
+        else {
+            boolean doubleOperator = false;
+
+            for (int i = 0; i <= input.length()-1; i++) {
+                char current = input.charAt(i);
+
+                while (((Character.isDigit(current))) && (i < input.length()-1)) {
                     i++;
-                    lastOperator = false;
+                    current = input.charAt(i);
+                    doubleOperator = false;
                 }
-                if ((input.charAt(i) == '*' || input.charAt(i) == '+' || input.charAt(i) == '-') && !lastOperator) {
-                    lastOperator = true;
+
+                if (current == '.' && input.length() != 1){
+                    if(!Character.isDigit(input.charAt(i+1))){
+                        return false;
+                    }
+                    else{
+                        i++;
+                        current = input.charAt(i);
+                    }
                 }
-                else if (Character.isDigit(input.charAt(i))) {
+
+                else if(current == '(' || current == ')' ){
+                    continue;
+                }
+
+                else if ((isOperator(current)) && !doubleOperator) {
+                    doubleOperator = true;
+                    if(input.charAt(i+1) == '-'){
+                        if((!Character.isDigit(input.charAt(i+2))) && (input.charAt(i+2) != '(')){
+                            return false;
+                        }
+                        else {
+                            doubleOperator = false;
+                        }
+                    }
+                }
+
+                else if (Character.isDigit(current)) {
                     return true;
                 }
+
                 else{
                     return false;
                 }
