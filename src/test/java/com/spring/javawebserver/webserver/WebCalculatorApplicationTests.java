@@ -76,7 +76,7 @@ class AppTest {
 		assertEquals(expected, input);
 
 		input = App.convertToPostfix("3+-5*((7+3/2)-1)");
-		expected = "3 -5 7 3 2 / + 1 - * +";
+		expected = "3 -5 7 3 2 / + 1 - * + ";
 		assertEquals(expected, input);
 
 		//Testing postfix float expressions
