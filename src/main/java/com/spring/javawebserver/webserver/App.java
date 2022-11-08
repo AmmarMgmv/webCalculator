@@ -1,7 +1,12 @@
 package com.spring.javawebserver.webserver;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.stream.Stream;
+
+import static java.lang.Math.exp;
+import static java.lang.Math.log;
 
 public class App
 {
